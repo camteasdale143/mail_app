@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>PICTURE A DAY</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <style media="screen">
+      body {
+        background-color: white;
+      }
+      #container {
+        text-align: center;
+        padding: 100px;
+        font-family: 'Open Sans', sans-serif;
+
+      }
+      span {
+        font-size: 100px;
+        font-weight: bold;
+      }
+      .topText {
+        font-size: 30px;
+        margin-bottom: -30px;
+      }
+
+    </style>
+    <div id="container">
+      <p>Next Picture At</p>
+      <p><span><%= time %></span></p>
+    </div>
+  </body>
+</html>
