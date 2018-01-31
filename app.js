@@ -1,20 +1,17 @@
 var express = require("express");
 var mail = require("nodemailer");
 var moment = require("moment");
-var util = require('util');
 
 var app = express();
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "views"))
-app.listen(process.env.PORT,process.env.IP, function(){
-  console.log("server started")
-})
-// app.listen(3000, function(){
+// app.listen(process.env.PORT,process.env.IP, function(){
 //   console.log("server started")
 // })
-
-var setTimeoutPromise = util.promisify(setTimeout);
+app.listen(3000, function(){
+  console.log("server started")
+})
 
 
 var startedTime = Date.now();
@@ -23,23 +20,31 @@ var startTime;
 console.log(startedTime)
 getRandomTime();
 function getRandomTime() {
-
   wait = Math.round(Math.random()*86400*1000);
+  startTime = Date.now();
+
   while (moment(Date.now() + wait).toObject().hours > 21 || moment(Date.now() + wait).toObject().hours < 6){
     wait = Math.round(Math.random()*86400*1000);
   }
-  startTime = Date.now();
+
+
   console.log(moment(startTime + wait).format('LT'));
-  setTimeoutPromise(wait).then((value) => {
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-      }
-    });
-    getRandomTime();
-  });
+
+  setInterval(function(){
+    if (Date.now() > startTime + wait) {
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+      getRandomTime();
+    }
+    else {
+      console.log("it isn't time")
+    }
+  }, 5000)
 }
 var transporter = mail.createTransport({
   service: 'gmail',
